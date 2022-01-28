@@ -17,22 +17,22 @@ import (
 	"fmt"
 	stdlog "log" // 日志包
 	"net/http"
-	_ "net/http/pprof"
+	_ "net/http/pprof" // 性能测试工具 https://zhuanlan.zhihu.com/p/51559344
 	"os"
 	"os/user"
 	"sort"
 
-	"github.com/prometheus/common/promlog"
-	"github.com/prometheus/common/promlog/flag"
+	"github.com/prometheus/common/promlog"      // 定义了prometheus日志初始化格式
+	"github.com/prometheus/common/promlog/flag" // 命令行参数解析工具
 
 	"github.com/go-kit/log"
 	"github.com/go-kit/log/level"
-	"github.com/prometheus/client_golang/prometheus"
-	promcollectors "github.com/prometheus/client_golang/prometheus/collectors"
+	"github.com/prometheus/client_golang/prometheus"                           // 提供指标和注册功能
+	promcollectors "github.com/prometheus/client_golang/prometheus/collectors" // 负责收集指标
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/prometheus/common/version"
-	"github.com/prometheus/exporter-toolkit/web"
-	"github.com/prometheus/node_exporter/collector"
+	"github.com/prometheus/exporter-toolkit/web"    // 提供tls等认证功能
+	"github.com/prometheus/node_exporter/collector" // 具体收集功能代码
 	kingpin "gopkg.in/alecthomas/kingpin.v2"
 )
 
@@ -141,6 +141,7 @@ func (h *handler) innerHandler(filters ...string) (http.Handler, error) {
 }
 
 func main() {
+	// 定义flag
 	var (
 		listenAddress = kingpin.Flag(
 			"web.listen-address",
